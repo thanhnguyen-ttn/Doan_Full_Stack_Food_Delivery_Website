@@ -15,7 +15,9 @@
     max-width: 50%;
     bottom: 10%;
     left: 6vw;
+    animation: fadeIn 3s;
 }
+
 .header-contents h2 {
     font-weight: 500;
     color: white;
