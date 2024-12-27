@@ -1,30 +1,39 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
-import foodRouter from "./routes/foodRoute.js";
+import express from 'express';
+import cors from 'cors';
+import { get } from 'mongoose';
+import { connectDB } from './config/db.js';
+import foodRouter from './routes/foodRoute.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Load environment variables
-dotenv.config();
 
-// app config
+//app config
 const app = express();
-const port = process.env.PORT || 4000;
+const port = 4000;
 
-// middleware
+//middle ware
 app.use(express.json());
 app.use(cors());
 
-// db connection
+// Serve uploaded files statically
+app.use('/uploads', express.static('uploads'));
+
+//db connection
 connectDB();
 
-// api endpoints
-app.use("/api/food", foodRouter);
+//api endpoints
+app.use("/api/food", foodRouter)
+app.use("/images", express.static("uploads"))
 
-app.get("/", (req, res) => {
-    res.send("API Working");
-});
 
-app.listen(port, () => {
+
+app.get('/', (req, res) => {
+    res.send("API is running");
+})
+
+
+
+app.listen(port, () =>{
     console.log(`Server Started on http://localhost:${port}`);
-});
+})
+
